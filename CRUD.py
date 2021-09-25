@@ -38,8 +38,6 @@ def salir_beber_el_rollo_de_siempre():
     if valor_salir == "yes":
         root.destroy()
 
-# ---------------------- Variables de control
-
 
 def borrar_campos():
     # no le puedo asignar directamente una cadena vacía (mi_id="") porque son variables de control
@@ -51,6 +49,19 @@ def borrar_campos():
     # para el texto, desde el principio 1.0, hasta el final END
     textoComentario.delete(1.0, END)
 
+
+def crear():
+    mi_conexion = sqlite3.connect("Usuarios")
+    mi_cursor = mi_conexion.cursor()
+
+    mi_cursor.execute(
+        f"INSERT INTO datos_usuarios VALUES(NULL,'{mi_nombre.get()}', '{mi_pass.get()}', '{mi_apellido.get()}', '{mi_direccion.get()}', '{textoComentario.get(1.0, END)}')")
+    mi_conexion.commit()
+
+    messagebox.showinfo("BBDD", "Registro insertado con éxito")
+
+
+# ---------------------- Variables de control
 
 mi_id = StringVar()
 mi_nombre = StringVar()
@@ -71,7 +82,7 @@ borrarMenu = Menu(barraMenu, tearoff=0)
 borrarMenu.add_command(label="Borrar campos", command=borrar_campos)
 
 crudMenu = Menu(barraMenu, tearoff=0)
-crudMenu.add_command(label="Create")
+crudMenu.add_command(label="Create", command=crear)
 crudMenu.add_command(label="Read")
 crudMenu.add_command(label="Update")
 crudMenu.add_command(label="Delete")
@@ -137,7 +148,7 @@ textoComentario.config(yscrollcommand="scrollVert")
 frameBotones = Frame(root)
 frameBotones.pack()
 
-botonCreate = Button(frameBotones, text="Create")
+botonCreate = Button(frameBotones, text="Create", command=crear)
 botonCreate.grid(row=0, column=0, padx=10, pady=10)
 
 botonRead = Button(frameBotones, text="Read")
