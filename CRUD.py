@@ -28,13 +28,22 @@ def conectarBBDD():
         messagebox.showwarning("Ojo!", "La base de datos ya existe")
 
 
+def salir_beber_el_rollo_de_siempre():
+    valor_salir = messagebox.askquestion(
+        "Salir", "Deseas salir de la aplicación?")
+    # si yes/no según el botón pulsado
+
+    if valor_salir == "yes":
+        root.destroy()
+
+
 barraMenu = Menu(root)
 root.config(menu=barraMenu, width=300, height=300)
 # -------------------------------------- Creación del menu
 # Creamos cada elemento del menu con las opciones de los desplegables
 bbddMenu = Menu(barraMenu, tearoff=0)
 bbddMenu.add_command(label="Conectar", command=conectarBBDD)
-bbddMenu.add_command(label="Salir")
+bbddMenu.add_command(label="Salir", command=salir_beber_el_rollo_de_siempre)
 
 borrarMenu = Menu(barraMenu, tearoff=0)
 borrarMenu.add_command(label="Borrar campos")
