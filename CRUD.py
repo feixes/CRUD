@@ -27,6 +27,8 @@ def conectarBBDD():
     except:
         messagebox.showwarning("Ojo!", "La base de datos ya existe")
 
+# ----------------------------- Función salir
+
 
 def salir_beber_el_rollo_de_siempre():
     valor_salir = messagebox.askquestion(
@@ -35,6 +37,26 @@ def salir_beber_el_rollo_de_siempre():
 
     if valor_salir == "yes":
         root.destroy()
+
+# ---------------------- Variables de control
+
+
+def borrar_campos():
+    # no le puedo asignar directamente una cadena vacía (mi_id="") porque son variables de control
+    mi_id.set("")
+    mi_nombre.set("")
+    mi_pass.set("")
+    mi_apellido.set("")
+    mi_direccion.set("")
+    # para el texto, desde el principio 1.0, hasta el final END
+    textoComentario.delete(1.0, END)
+
+
+mi_id = StringVar()
+mi_nombre = StringVar()
+mi_pass = StringVar()
+mi_apellido = StringVar()
+mi_direccion = StringVar()
 
 
 barraMenu = Menu(root)
@@ -46,7 +68,7 @@ bbddMenu.add_command(label="Conectar", command=conectarBBDD)
 bbddMenu.add_command(label="Salir", command=salir_beber_el_rollo_de_siempre)
 
 borrarMenu = Menu(barraMenu, tearoff=0)
-borrarMenu.add_command(label="Borrar campos")
+borrarMenu.add_command(label="Borrar campos", command=borrar_campos)
 
 crudMenu = Menu(barraMenu, tearoff=0)
 crudMenu.add_command(label="Create")
@@ -71,33 +93,33 @@ miFrame.pack()
 labelID = Label(miFrame, text="ID:")
 labelID.grid(row=0, column=0, sticky="e", padx=10, pady=10)
 
-cuadroID = Entry(miFrame)
+cuadroID = Entry(miFrame, textvariable=mi_id)
 cuadroID.grid(row=0, column=1, padx=10, pady=10)
 
 labelNombre = Label(miFrame, text="Nombre:")
 labelNombre.grid(row=1, column=0, sticky="e", padx=10, pady=10)
 
-cuadroNombre = Entry(miFrame)
+cuadroNombre = Entry(miFrame, textvariable=mi_nombre)
 cuadroNombre.grid(row=1, column=1, padx=10, pady=10)
 cuadroNombre.config(fg="red", justify="right")
 
 labelPass = Label(miFrame, text="Contraseña:")
 labelPass.grid(row=2, column=0, sticky="e", padx=10, pady=10)
 
-cuadroPass = Entry(miFrame)
+cuadroPass = Entry(miFrame, textvariable=mi_pass)
 cuadroPass.grid(row=2, column=1, padx=10, pady=10)
 cuadroPass.config(show="*")
 
 labelApellido = Label(miFrame, text="Apellido:")
 labelApellido.grid(row=3, column=0, sticky="e", padx=10, pady=10)
 
-cuadroApellido = Entry(miFrame)
+cuadroApellido = Entry(miFrame, textvariable=mi_apellido)
 cuadroApellido.grid(row=3, column=1, padx=10, pady=10)
 
 labelDireccion = Label(miFrame, text="Dirección:")
 labelDireccion.grid(row=4, column=0, sticky="e", padx=10, pady=10)
 
-cuadroDireccion = Entry(miFrame)
+cuadroDireccion = Entry(miFrame, textvariable=mi_direccion)
 cuadroDireccion.grid(row=4, column=1, padx=10, pady=10)
 
 labelComentario = Label(miFrame, text="Comentarios:")
