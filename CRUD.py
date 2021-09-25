@@ -11,19 +11,21 @@ root = Tk()
 def conectarBBDD():
     miConexion = sqlite3.connect("Usuarios")
     miCursor = miConexion.cursor()
+    try:
+        miCursor.execute('''
+            CREATE TABLE datos_usuarios(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nombre VARCHAR(50),
+                password VARCHAR(50),
+                apellido VARCHAR(50),
+                direccion VARCHAR(50),
+                comentarios VARCHAR(120)
+            )
+        ''')
 
-    miCursor.execute('''
-        CREATE TABLE datos_usuarios(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre VARCHAR(50),
-            password VARCHAR(50),
-            apellido VARCHAR(50),
-            direccion VARCHAR(50),
-            comentarios VARCHAR(120)
-        )
-    ''')
-
-    messagebox.showinfo("BBDD", "Base de datos creado con éxito")
+        messagebox.showinfo("BBDD", "Base de datos creado con éxito")
+    except:
+        messagebox.showwarning("Ojo!", "La base de datos ya existe")
 
 
 barraMenu = Menu(root)
