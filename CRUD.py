@@ -77,5 +77,23 @@ scrollVert = Scrollbar(miFrame, command=textoComentario.yview)
 scrollVert.grid(row=5, column=2, sticky="nsew")
 textoComentario.config(yscrollcommand="scrollVert")
 
+# ---------------------------------- Botones CRUD
+
+# nuevo frame para los botones
+frameBotones = Frame(root)
+frameBotones.pack()
+
+botonCreate = Button(frameBotones, text="Create")
+botonCreate.grid(row=0, column=0, padx=5, pady=10)
+
+botonRead = Button(frameBotones, text="Read")
+botonRead.grid(row=0, column=1, padx=5, pady=10)
+
+botonUpdate = Button(frameBotones, text="Update")
+botonUpdate.grid(row=0, column=2, padx=5, pady=10)
+
+botonDelete = Button(frameBotones, text="Delete")
+botonDelete.grid(row=0, column=3, padx=5, pady=10)
+
 
 root.mainloop()
