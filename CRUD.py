@@ -61,8 +61,38 @@ def crear():
     messagebox.showinfo("BBDD", "Registro insertado con éxito")
 
 
-# ---------------------- Variables de control
+def read():
+    mi_conexion = sqlite3.connect("Usuarios")
+    mi_cursor = mi_conexion.cursor()
 
+    mi_cursor.execute(
+        f"SELECT * FROM datos_usuarios WHERE id={mi_id.get()}")
+
+    data_usuario = mi_cursor.fetchall()
+
+    for usuario in data_usuario:
+        mi_id.set(usuario[0])
+        mi_nombre.set(usuario[1])
+        mi_pass.set(usuario[2])
+        mi_apellido.set(usuario[3])
+        mi_direccion.set(usuario[4])
+        textoComentario.insert(1.0, usuario[5])
+
+    mi_conexion.commit()
+
+
+def update():
+    mi_conexion = sqlite3.connect("Usuarios")
+    mi_cursor = mi_conexion.cursor()
+
+    mi_cursor.execute(
+        f"UPDATE datos_usuarios SET nombre='{mi_nombre.get()}', password='{mi_pass.get()}', apellido='{mi_apellido.get()}', direccion='{mi_direccion.get()}', comentarios='{textoComentario.get(1.0, END)}' WHERE id={mi_id.get()} ")
+    mi_conexion.commit()
+
+    messagebox.showinfo("BBDD", "Registro actualizado con éxito")
+
+
+# ---------------------- Variables de control
 mi_id = StringVar()
 mi_nombre = StringVar()
 mi_pass = StringVar()
@@ -83,8 +113,8 @@ borrarMenu.add_command(label="Borrar campos", command=borrar_campos)
 
 crudMenu = Menu(barraMenu, tearoff=0)
 crudMenu.add_command(label="Create", command=crear)
-crudMenu.add_command(label="Read")
-crudMenu.add_command(label="Update")
+crudMenu.add_command(label="Read", command=read)
+crudMenu.add_command(label="Update", command=update)
 crudMenu.add_command(label="Delete")
 
 ayudaMenu = Menu(barraMenu, tearoff=0)
@@ -151,10 +181,10 @@ frameBotones.pack()
 botonCreate = Button(frameBotones, text="Create", command=crear)
 botonCreate.grid(row=0, column=0, padx=10, pady=10)
 
-botonRead = Button(frameBotones, text="Read")
+botonRead = Button(frameBotones, text="Read", command=read)
 botonRead.grid(row=0, column=1, padx=10, pady=10)
 
-botonUpdate = Button(frameBotones, text="Update")
+botonUpdate = Button(frameBotones, text="Update", command=update)
 botonUpdate.grid(row=0, column=2, padx=10, pady=10)
 
 botonDelete = Button(frameBotones, text="Delete")
