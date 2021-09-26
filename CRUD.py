@@ -149,7 +149,7 @@ ayudaMenu = Menu(barraMenu, tearoff=0)
 ayudaMenu.add_command(label="Licencia")
 ayudaMenu.add_command(label="Acerca de...")
 
-# Creamos las etiquetas de cada manu
+# Creamos las etiquetas de cada menu
 barraMenu.add_cascade(label="BBDD", menu=bbddMenu)
 barraMenu.add_cascade(label="Borrar", menu=borrarMenu)
 barraMenu.add_cascade(label="CRUD", menu=crudMenu)
