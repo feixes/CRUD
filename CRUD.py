@@ -58,8 +58,16 @@ def crear():
     mi_conexion = sqlite3.connect("Usuarios")
     mi_cursor = mi_conexion.cursor()
 
+    # mi_cursor.execute(
+    #     f"INSERT INTO datos_usuarios VALUES(NULL,'{mi_nombre.get()}', '{mi_pass.get()}', '{mi_apellido.get()}', '{mi_direccion.get()}', '{textoComentario.get(1.0, END)}')")
+
+    # parametrización para evitar inyección sql
+    datos = mi_nombre.get(), mi_pass.get(), mi_apellido.get(
+    ), mi_direccion.get(), textoComentario.get("1.0", END)
+
     mi_cursor.execute(
-        f"INSERT INTO datos_usuarios VALUES(NULL,'{mi_nombre.get()}', '{mi_pass.get()}', '{mi_apellido.get()}', '{mi_direccion.get()}', '{textoComentario.get(1.0, END)}')")
+        "INSERT INTO datos_usuarios VALUES(NULL, ?,?,?,?,?)", (datos))
+
     mi_conexion.commit()
 
     messagebox.showinfo("BBDD", "Registro insertado con éxito")
@@ -89,8 +97,15 @@ def update():
     mi_conexion = sqlite3.connect("Usuarios")
     mi_cursor = mi_conexion.cursor()
 
+    # mi_cursor.execute(
+    #    f"UPDATE datos_usuarios SET nombre='{mi_nombre.get()}', password='{mi_pass.get()}', apellido='{mi_apellido.get()}', direccion='{mi_direccion.get()}', comentarios='{textoComentario.get(1.0, END)}' WHERE id={mi_id.get()} ")
+
+    datos = mi_nombre.get(), mi_pass.get(), mi_apellido.get(
+    ), mi_direccion.get(), textoComentario.get("1.0", END)
+
     mi_cursor.execute(
-        f"UPDATE datos_usuarios SET nombre='{mi_nombre.get()}', password='{mi_pass.get()}', apellido='{mi_apellido.get()}', direccion='{mi_direccion.get()}', comentarios='{textoComentario.get(1.0, END)}' WHERE id={mi_id.get()} ")
+        f"UPDATE datos_usuarios SET nombre=?, password=?, apellido=?, direccion=?, comentarios=? WHERE id={mi_id.get()}", (datos))
+
     mi_conexion.commit()
 
     messagebox.showinfo("BBDD", "Registro actualizado con éxito")
@@ -158,17 +173,17 @@ cuadroNombre.grid(row=1, column=1, padx=10, pady=10)
 cuadroNombre.config(fg="red", justify="right")
 
 labelPass = Label(miFrame, text="Contraseña:")
-labelPass.grid(row=2, column=0, sticky="e", padx=10, pady=10)
+labelPass.grid(row=3, column=0, sticky="e", padx=10, pady=10)
 
 cuadroPass = Entry(miFrame, textvariable=mi_pass)
-cuadroPass.grid(row=2, column=1, padx=10, pady=10)
+cuadroPass.grid(row=3, column=1, padx=10, pady=10)
 cuadroPass.config(show="*")
 
 labelApellido = Label(miFrame, text="Apellido:")
-labelApellido.grid(row=3, column=0, sticky="e", padx=10, pady=10)
+labelApellido.grid(row=2, column=0, sticky="e", padx=10, pady=10)
 
 cuadroApellido = Entry(miFrame, textvariable=mi_apellido)
-cuadroApellido.grid(row=3, column=1, padx=10, pady=10)
+cuadroApellido.grid(row=2, column=1, padx=10, pady=10)
 
 labelDireccion = Label(miFrame, text="Dirección:")
 labelDireccion.grid(row=4, column=0, sticky="e", padx=10, pady=10)
